@@ -2096,11 +2096,6 @@
           content.parents(".fancybox-slide").trigger("onReset");
         }
 
-        // Create temporary element marking original place of the content
-        slide.$placeholder = $("<div>")
-          .hide()
-          .insertAfter(content);
-
         // Make sure content is visible
         content.css("display", "inline-block");
       } else if (!slide.hasError) {
@@ -2125,13 +2120,6 @@
           .find("video,audio")
           .trigger("pause");
 
-        // Put content back
-        if (slide.$placeholder) {
-          slide.$placeholder.after(content.removeClass("fancybox-content").hide()).remove();
-
-          slide.$placeholder = null;
-        }
-
         // Remove custom close button
         if (slide.$smallBtn) {
           slide.$smallBtn.remove();
@@ -2148,7 +2136,7 @@
         }
       });
 
-      $(content).appendTo(slide.$slide);
+      $(content).clone().appendTo(slide.$slide);
 
       if ($(content).is("video,audio")) {
         $(content).addClass("fancybox-video");
